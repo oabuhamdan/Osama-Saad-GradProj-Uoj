@@ -1,0 +1,1127 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Search Result</title>
+    <meta name="robots" content="noindex">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="{%static 'search_title/css/stars.css'%}">
+    <style>
+    body {
+        background: #141414;
+        font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+        font-size: 14px;
+        color:#fff;
+        margin: 0;
+        padding: 0;
+    }
+    .modal-backdrop {
+       /*background-color: #3a3a3a;
+    }
+    .modal-header{
+        /*background: #141414;
+        border-bottom: 1px solid #3a3a3a*/
+    }
+    .modal-body{
+        /*background: #141414;*/
+
+    }
+    .modal-footer{
+        /*background: #141414;
+        border-top: 1px solid #3a3a3a*/
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </style>
+    <style class="INLINE_PEN_STYLESHEET_ID">
+        @font-face {
+          font-family: 'Roboto';
+          font-style: normal;
+          font-weight: 400;
+          src: local('Roboto'), local('Roboto-Regular'), url(https://fonts.gstatic.com/s/roboto/v20/KFOmCnqEu92Fr1Mu5mxP.ttf) format('truetype');
+        }
+        @font-face {
+          font-family: 'Roboto';
+          font-style: normal;
+          font-weight: 700;
+          src: local('Roboto Bold'), local('Roboto-Bold'), url(https://fonts.gstatic.com/s/roboto/v20/KFOlCnqEu92Fr1MmWUlfABc9.ttf) format('truetype');
+        }
+        .tw-block-parent {
+          max-width: 100%
+          font: 14px/1.4 Roboto, Helvetica, Arial, Tahoma, sans-serif;
+          font-weight: 300;
+          color: #292F33;
+        }
+        .Avatar {
+          width: 32px;
+          height: 32px;
+          background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAFwklEQVRoBdXB3YvcZx3G4c/9/GZ2dnY3u923JoGmaUJSa2itGFvBNMWCoD1SoSKiB4pnpQqCB/4LgnhQRE8EeyCI6JmCQqkatQ2ktrFIjU0JSRuzcZNsk31zJjPz+94+s2GN1N2d2W0szHXJGQNMzhhgcsYAkzMGmJwxwOSMASZnDDA5Y4DJGQNMzhhgcsb7yDbrJPFeyRnvA9uEQQIhjLEhCSTRZZt1kuiHnLENtumShAGxOQMCbANC4n/YZKbLQJLoMiB6kzN2wDaS6MU2kijDnL60yrmFJo1WUK8m7puqcfSeUSpFYt1io029WjBUSdhGEluRM3qwyYwkLl5v0gk4MD1MJ4JCQhIbCZskcW21zU9fucbr8w2aHVNIlDa1QhzZU+eph6folOb5s4tM1As+//A0YdYkia3IGT3YZt1zL1/lwsJNnjm+h9mxKmUESUIS/y0ikESjHfzgxXn+9s8GY7WCJDAgoDS0ymC4kmiXwT0TNb766Ay7ahVGa4lbhMSm5Iwe7EBKlBF893eXeeNqk/2TNb50dJpDM3VsY4PEfxhIEi+cvcFPXllgvFYQgAFxm4AyTLUQH903SiF45N4xDs3WiQikhMSm5Iwe7EBKdMJ854VLzC21KcOMVAs+/cAETxwep1okuiJM2KQkIsz3fn+Z89dvUpFA4t1MZlMIGu3gMw9O8uSRSboESGIrckYPEUZizY9PXeXkW8uMVAvapSnDHJiq8cn7xzk0W+eueoV1Eebbv3qLlZZJSYiN2QbMFz8yw7ED49imSxI2SGxKzujBBjtIKfHXuVWe/eM8taoQoqtdBmXAvZNVPjBbZ99kjd1jVUaGEs/+4TLXGyWVIrERAe0ymB6t8q1P7GWiXhA2RUr0Q87oyYRZU4b5xWsLnDi3zFAhjOiSoN0xzU4wXBG7agW1amK5WdIJI4kNGTo2d48VfOP4XqZGKhhIEv2QM3qwA0m0Oua5U1eYGa1yem6VaysllUKAASFAgjCUYWwoEkhiMwKaneDwbI2nP76H0VqBbSTRDzmjhwgjCTA/fHGeU2+vMlZLSGIrAgwYEBtLguVmyWMHd/GVR2aRwDYpJfohZ/Rgg21SEq/NrfD9P80zUikwEAaJHTFQCJZvdvjCh6f51AOTlBEkCUn0Q87oydisCeBnpxf4zd9vMDZUUCRhg8SOlBGMVBNPH9vNwZk6ESYl0S85o09hI6Bdmt++uciJc8ssNkuKJHZCQLNdcmR3na8/vhcBkpES/ZIz+mSbrjLMy2+vcGa+yZkrDVZbQZHEdthGQGn42sdmOLpvFxGBJCTRLzmjT7axQYKf/+Uaz59dYnSooBNGEv0ykIBGO3hob51nHtuNJLoksR1yxjZEGAmaneBHJ6/w6qVVRqoFCJJELzYkQSeC4Wrim4/vYd/kMBGBUkJsj5yxDTbYQUqi0Q5+feYGL51fIWzawZZskMCGMoIvH53m2MEJyjBJIIntkjP6ZBtziw2FAIlGq+SXr1/nxLklUkpsxEACyjCdMJ99cJInj0xSRpAkJGFAbI+csUPh4Mx8k1cvrvDni6t0DEni3cQtzU4wXEl87qFJnjg8gW26JLFTcsYWbNMlwZtXm1y60WK1VfJOo2R+qc3ccpulZkm9KoRYJ7GmDNMqjQT7J2s89aEp7r+7ToSRQBLvhZyxBdusu9kJXrqwwskLy/xjscVio6ReTdQqiXUGwlCGKcOMDxfsGavw6P4xjh/cxVClIMJIIAnbSGKn5Iw+2CAZEJ0yeONKk/PvNJlbbLHQKGm0gjJMkcToUOKuesHe8SHum6rxwd3DVIsCMBEgCYk7Qs7YhrARIImuMsy/WkGrDMKQBENFYmQoUSSxxiYASYg7S87og01mJGGbMGuKJDZThulKAknYBoTEHSNn7JBt1pnbxG2S+H+SMwaYnDHA5IwBJmcMMDljgMkZA0zOGGByxgCTMwaYnDHA/g38F0yewshmHwAAAABJRU5ErkJggiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIA==');
+          background-size: 32px;
+        }
+        .timeline-TweetList-tweet {
+          border-top: 1px solid rgba(15, 70, 100, 0.12);
+        }
+        .timeline-TweetList-tweet:first-of-type {
+          border-top: none;
+        }
+        .timeline-Tweet {
+          position: relative;
+          padding: 10px;
+        }
+        .timeline-Tweet a,
+        .timeline-Tweet .link {
+          color: #3b94d9;
+          text-decoration: none;
+          outline: 0;
+        }
+        .timeline-Tweet a:hover,
+        .timeline-Tweet .link:hover {
+          color: #55acee;
+        }
+        .timeline-Tweet-brand {
+          position: absolute;
+          top: 10px;
+          right: 10px;
+        }
+        .timeline-Tweet-author {
+          position: relative;
+          margin-bottom: 2px;
+          padding-left: 40px;
+        }
+        .timeline-Tweet-text {
+          margin-left: 40px;
+          margin-bottom: 12px;
+          word-wrap: break-word;
+          font-size: 18px;
+          line-height: 24px;
+          font-weight: 300;
+        }
+        .timeline-Tweet-metadata {
+          position: absolute;
+          bottom: 12px;
+          right: 10px;
+        }
+        .timeline-Tweet-actions {
+          margin: 0 0 0 40px;
+          padding: 0;
+          list-style: none;
+          border: none;
+        }
+        .timeline-Tweet-action {
+          display: inline-block;
+          font-size: 17px;
+        }
+        .timeline-Tweet-action + .timeline-Tweet-action {
+          margin-left: 20px;
+        }
+        .timeline-Tweet-timestamp {
+          font-size: 12px;
+          line-height: 18px;
+          color: #e1e8ed;
+          -webkit-transition: color 0.2s;
+          transition: color 0.2s;
+        }
+        .timeline-Tweet:hover {
+          background-color: rgba(160, 200, 220, 0.12);
+        }
+        .timeline-TweetList-tweet .my_hover{
+            position:relative;
+            width: auto;
+            height:100px;
+            max-height:400px;
+            background-color: rgba(160, 200, 220);
+            color: black;
+            padding: 5px 0;
+            text-align:center;
+            border-radius: 8px;
+            display:block;
+            margin:0 auto;
+            margin-bottom:5px;
+            opacity:0;
+            transition:0.6s opacity;
+        }
+        .timeline-TweetList-tweet .my_hover:before{
+            content:'';
+            width:10px;
+            height:10px;
+            position:absolute;
+            bottom: -5px;
+            background-color: rgba(160, 200, 220);
+            z-index:-1;
+            left:50%;
+            transform: translateX(-50%) rotate(-45deg);
+        }
+        .timeline-TweetList-tweet:hover .my_hover{
+            opacity:1;
+        }
+        .timeline-TweetList-tweet:hover .my_hover:before{
+            opacity:1;
+        }
+
+        .timeline-Tweet:hover .timeline-Tweet-brand .Icon {
+          background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA3MiA3MiI+PHBhdGggZmlsbD0ibm9uZSIgZD0iTTAgMGg3MnY3MkgweiIvPjxwYXRoIGNsYXNzPSJpY29uIiBmaWxsPSIjNTVhY2VlIiBkPSJNNjguODEyIDE1LjE0Yy0yLjM0OCAxLjA0LTQuODcgMS43NDQtNy41MiAyLjA2IDIuNzA0LTEuNjIgNC43OC00LjE4NiA1Ljc1Ny03LjI0My0yLjUzIDEuNS01LjMzIDIuNTkyLTguMzE0IDMuMTc2QzU2LjM1IDEwLjU5IDUyLjk0OCA5IDQ5LjE4MiA5Yy03LjIzIDAtMTMuMDkyIDUuODYtMTMuMDkyIDEzLjA5MyAwIDEuMDI2LjExOCAyLjAyLjMzOCAyLjk4QzI1LjU0MyAyNC41MjcgMTUuOSAxOS4zMTggOS40NCAxMS4zOTZjLTEuMTI1IDEuOTM2LTEuNzcgNC4xODQtMS43NyA2LjU4IDAgNC41NDMgMi4zMTIgOC41NTIgNS44MjQgMTAuOS0yLjE0Ni0uMDctNC4xNjUtLjY1OC01LjkzLTEuNjQtLjAwMi4wNTYtLjAwMi4xMS0uMDAyLjE2MyAwIDYuMzQ1IDQuNTEzIDExLjYzOCAxMC41MDQgMTIuODQtMS4xLjI5OC0yLjI1Ni40NTctMy40NS40NTctLjg0NSAwLTEuNjY2LS4wNzgtMi40NjQtLjIzIDEuNjY3IDUuMiA2LjUgOC45ODUgMTIuMjMgOS4wOS00LjQ4MiAzLjUxLTEwLjEzIDUuNjA1LTE2LjI2IDUuNjA1LTEuMDU1IDAtMi4wOTYtLjA2LTMuMTIyLS4xODQgNS43OTQgMy43MTcgMTIuNjc2IDUuODgyIDIwLjA2NyA1Ljg4MiAyNC4wODMgMCAzNy4yNS0xOS45NSAzNy4yNS0zNy4yNSAwLS41NjUtLjAxMy0xLjEzMy0uMDM4LTEuNjkzIDIuNTU4LTEuODQ3IDQuNzc4LTQuMTUgNi41MzItNi43NzR6Ii8+PC9zdmc+');
+        }
+        .timeline-Tweet:hover .timeline-Tweet-action .Icon {
+          opacity: 1;
+        }
+        .timeline-Tweet:hover .timeline-Tweet-timestamp {
+          color: #667580;
+        }
+        .TweetAuthor {
+          max-width: 100%;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          word-wrap: normal;
+        }
+        .TweetAuthor-link {
+          font-weight: inherit;
+          color: inherit;
+          text-decoration: inherit;
+        }
+        .TweetAuthor-avatar {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 32px;
+          height: 32px;
+          overflow: hidden;
+          border-radius: 4px;
+        }
+        .TweetAuthor-name {
+          margin-top: 5px;
+          font-size: 14px;
+          font-weight: 700;
+          line-height: 18px;
+        }
+        .TweetAuthor-screenName {
+          margin-left: 5px;
+          font-size: 13px;
+          line-height: 18px;
+          font-weight: 300;
+          color: #8899A6;
+        }
+        .Icon {
+          display: inline-block;
+          width: 1em;
+          height: 1.25em;
+          background-repeat: no-repeat;
+          background-size: contain;
+          vertical-align: text-bottom;
+          opacity: 0.6;
+          -webkit-transition: opacity 0.2s, background-image 0.2s;
+          transition: opacity 0.2s, background-image 0.2s;
+        }
+        .Icon:hover {
+          opacity: 1;
+        }
+        .Icon--twitter {
+          opacity: 1;
+          background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA3MiA3MiI+PHBhdGggZmlsbD0ibm9uZSIgZD0iTTAgMGg3MnY3MkgweiIvPjxwYXRoIGNsYXNzPSJpY29uIiBmaWxsPSIjZTFlOGVkIiBkPSJNNjguODEyIDE1LjE0Yy0yLjM0OCAxLjA0LTQuODcgMS43NDQtNy41MiAyLjA2IDIuNzA0LTEuNjIgNC43OC00LjE4NiA1Ljc1Ny03LjI0My0yLjUzIDEuNS01LjMzIDIuNTkyLTguMzE0IDMuMTc2QzU2LjM1IDEwLjU5IDUyLjk0OCA5IDQ5LjE4MiA5Yy03LjIzIDAtMTMuMDkyIDUuODYtMTMuMDkyIDEzLjA5MyAwIDEuMDI2LjExOCAyLjAyLjMzOCAyLjk4QzI1LjU0MyAyNC41MjcgMTUuOSAxOS4zMTggOS40NCAxMS4zOTZjLTEuMTI1IDEuOTM2LTEuNzcgNC4xODQtMS43NyA2LjU4IDAgNC41NDMgMi4zMTIgOC41NTIgNS44MjQgMTAuOS0yLjE0Ni0uMDctNC4xNjUtLjY1OC01LjkzLTEuNjQtLjAwMi4wNTYtLjAwMi4xMS0uMDAyLjE2MyAwIDYuMzQ1IDQuNTEzIDExLjYzOCAxMC41MDQgMTIuODQtMS4xLjI5OC0yLjI1Ni40NTctMy40NS40NTctLjg0NSAwLTEuNjY2LS4wNzgtMi40NjQtLjIzIDEuNjY3IDUuMiA2LjUgOC45ODUgMTIuMjMgOS4wOS00LjQ4MiAzLjUxLTEwLjEzIDUuNjA1LTE2LjI2IDUuNjA1LTEuMDU1IDAtMi4wOTYtLjA2LTMuMTIyLS4xODQgNS43OTQgMy43MTcgMTIuNjc2IDUuODgyIDIwLjA2NyA1Ljg4MiAyNC4wODMgMCAzNy4yNS0xOS45NSAzNy4yNS0zNy4yNSAwLS41NjUtLjAxMy0xLjEzMy0uMDM4LTEuNjkzIDIuNTU4LTEuODQ3IDQuNzc4LTQuMTUgNi41MzItNi43NzR6Ii8+PC9zdmc+');
+        }
+        .Icon--twitter:hover {
+          background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA3MiA3MiI+PHBhdGggZmlsbD0ibm9uZSIgZD0iTTAgMGg3MnY3MkgweiIvPjxwYXRoIGNsYXNzPSJpY29uIiBmaWxsPSIjNTVhY2VlIiBkPSJNNjguODEyIDE1LjE0Yy0yLjM0OCAxLjA0LTQuODcgMS43NDQtNy41MiAyLjA2IDIuNzA0LTEuNjIgNC43OC00LjE4NiA1Ljc1Ny03LjI0My0yLjUzIDEuNS01LjMzIDIuNTkyLTguMzE0IDMuMTc2QzU2LjM1IDEwLjU5IDUyLjk0OCA5IDQ5LjE4MiA5Yy03LjIzIDAtMTMuMDkyIDUuODYtMTMuMDkyIDEzLjA5MyAwIDEuMDI2LjExOCAyLjAyLjMzOCAyLjk4QzI1LjU0MyAyNC41MjcgMTUuOSAxOS4zMTggOS40NCAxMS4zOTZjLTEuMTI1IDEuOTM2LTEuNzcgNC4xODQtMS43NyA2LjU4IDAgNC41NDMgMi4zMTIgOC41NTIgNS44MjQgMTAuOS0yLjE0Ni0uMDctNC4xNjUtLjY1OC01LjkzLTEuNjQtLjAwMi4wNTYtLjAwMi4xMS0uMDAyLjE2MyAwIDYuMzQ1IDQuNTEzIDExLjYzOCAxMC41MDQgMTIuODQtMS4xLjI5OC0yLjI1Ni40NTctMy40NS40NTctLjg0NSAwLTEuNjY2LS4wNzgtMi40NjQtLjIzIDEuNjY3IDUuMiA2LjUgOC45ODUgMTIuMjMgOS4wOS00LjQ4MiAzLjUxLTEwLjEzIDUuNjA1LTE2LjI2IDUuNjA1LTEuMDU1IDAtMi4wOTYtLjA2LTMuMTIyLS4xODQgNS43OTQgMy43MTcgMTIuNjc2IDUuODgyIDIwLjA2NyA1Ljg4MiAyNC4wODMgMCAzNy4yNS0xOS45NSAzNy4yNS0zNy4yNSAwLS41NjUtLjAxMy0xLjEzMy0uMDM4LTEuNjkzIDIuNTU4LTEuODQ3IDQuNzc4LTQuMTUgNi41MzItNi43NzR6Ii8+PC9zdmc+');
+        }
+        .Icon--verified {
+          opacity: 1;
+          cursor: default;
+          background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA3MiI+PHBhdGggZmlsbD0ibm9uZSIgZD0iTTAgMGg2NHY3MkgweiIvPjxwYXRoIGZpbGw9IiM4OGM5ZjkiIGQ9Ik0zIDM3LjMxNWMwIDQuMTI1IDIuMTYyIDcuNzI2IDUuMzYzIDkuNjI0LS4wNTYuNDY3LS4wOS45MzctLjA5IDEuNDIgMCA2LjEwMyA0LjcyIDExLjA0NSAxMC41NDYgMTEuMDQ1IDEuMjk1IDAgMi41NDItLjIzNCAzLjY4Ny0uNjg2QzI0LjIyIDYyLjQgMjcuODI3IDY0LjkzIDMyIDY0LjkzYzQuMTc0IDAgNy43ODItMi41MyA5LjQ5LTYuMjEzIDEuMTQ4LjQ1IDIuMzkuNjg1IDMuNjkuNjg1IDUuODI2IDAgMTAuNTQ2LTQuOTQgMTAuNTQ2LTExLjA0NSAwLS40ODMtLjAzNy0uOTUzLS4wOTMtMS40MkM1OC44MyA0NS4wNCA2MSA0MS40NCA2MSAzNy4zMTRjMC00LjM3LTIuNDItOC4xNS01LjkzMy05Ljk0Ni40MjctMS4yMDMuNjU4LTIuNS42NTgtMy44NjUgMC02LjEwNC00LjcyLTExLjA0NS0xMC41NDUtMTEuMDQ1LTEuMzAyIDAtMi41NDMuMjMyLTMuNjkuNjg4LTEuNzA3LTMuNjg1LTUuMzE1LTYuMjE2LTkuNDktNi4yMTYtNC4xNzMgMC03Ljc3OCAyLjUzLTkuNDkyIDYuMjE2LTEuMTQ2LS40NTUtMi4zOTMtLjY4OC0zLjY4OC0uNjg4LTUuODI3IDAtMTAuNTQ1IDQuOTQtMTAuNTQ1IDExLjA0NSAwIDEuMzY0LjIzIDIuNjYyLjY1NiAzLjg2NEM1LjQyIDI5LjE2MyAzIDMyLjk0NCAzIDM3LjMxNHoiLz48cGF0aCBmaWxsPSIjRkZGIiBkPSJNMTcuODcgMzkuMDhsNy4wMTUgNi45NzhjLjU4NS41ODIgMS4zNS44NzMgMi4xMTYuODczLjc3IDAgMS41NDItLjI5NCAyLjEyNy0uODgzLjM0NC0uMzQ2IDE1Ljk4LTE1Ljk3NCAxNS45OC0xNS45NzQgMS4xNzItMS4xNzIgMS4xNzItMy4wNyAwLTQuMjQzLTEuMTctMS4xNy0zLjA3LTEuMTcyLTQuMjQyIDBsLTEzLjg3IDEzLjg2My00Ljg5Mi00Ljg2OGMtMS4xNzQtMS4xNjgtMy4wNzQtMS4xNjQtNC4yNDIuMDEtMS4xNjggMS4xNzYtMS4xNjMgMy4wNzUuMDEgNC4yNDR6Ii8+PC9zdmc+');
+        }
+        .Icon--heart {
+          background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1NCA3MiI+PHBhdGggY2xhc3M9Imljb24iIGZpbGw9IiM4ODk5YTYiIGQ9Ik0zOC43MjMgMTJjLTcuMTg3IDAtMTEuMTYgNy4zMDYtMTEuNzIzIDguMTMtLjU2My0uODI0LTQuNDk2LTguMTMtMTEuNzIzLTguMTNDOC43OSAxMiAzLjUzMyAxOC4xNjMgMy41MzMgMjQuNjQ3IDMuNTMzIDM5Ljk2NCAyMS44OSA1NS45MDcgMjcgNTZjNS4xMS0uMDkzIDIzLjQ2Ny0xNi4wMzYgMjMuNDY3LTMxLjM1M0M1MC40NjcgMTguMTYzIDQ1LjIxIDEyIDM4LjcyMyAxMnoiLz48L3N2Zz4=');
+        }
+        .Icon--heart:hover {
+          background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1NCA3MiI+PHBhdGggY2xhc3M9Imljb24iIGZpbGw9IiNlODFjNGYiIGQ9Ik0zOC43MjMgMTJjLTcuMTg3IDAtMTEuMTYgNy4zMDYtMTEuNzIzIDguMTMtLjU2My0uODI0LTQuNDk2LTguMTMtMTEuNzIzLTguMTNDOC43OSAxMiAzLjUzMyAxOC4xNjMgMy41MzMgMjQuNjQ3IDMuNTMzIDM5Ljk2NCAyMS44OSA1NS45MDcgMjcgNTZjNS4xMS0uMDkzIDIzLjQ2Ny0xNi4wMzYgMjMuNDY3LTMxLjM1M0M1MC40NjcgMTguMTYzIDQ1LjIxIDEyIDM4LjcyMyAxMnoiLz48L3N2Zz4=');
+        }
+        .Icon--share {
+          background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1Ni44IDcyIj48cGF0aCBmaWxsPSJub25lIiBkPSJNMC0uN2g0OHY3MkgweiIvPjxwYXRoIGNsYXNzPSJpY29uIiBmaWxsPSIjNjY3NTgwIiBkPSJNNTIuOCAzMi45TDQyLjIgMjIuM2MtMS40LTEuNC0zLjYtMS40LTUgMHMtMS40IDMuNiAwIDVsNC42IDQuNkgyMC45Yy0xLjkgMC0zLjUgMS42LTMuNSAzLjVzMS42IDMuNSAzLjUgMy41aDIwLjlsLTQuNiA0LjZjLTEuNCAxLjQtMS40IDMuNiAwIDUgLjcuNyAxLjYgMSAyLjUgMXMxLjgtLjMgMi41LTFsMTAuNi0xMC42YzEuNC0xLjQgMS40LTMuNiAwLTV6Ii8+PHBhdGggY2xhc3M9Imljb24iIGZpbGw9IiM2Njc1ODAiIGQ9Ik0yNC40IDQ5LjRoLTEzYy0uNiAwLTEuMS0uNS0xLjItMS4xVjIyLjRjMC0uNy41LTEuMiAxLjItMS4yaDEyLjljMS45IDAgMy41LTEuNiAzLjUtMy41cy0xLjYtMy41LTMuNS0zLjVIOC45Yy0zLjEgMC01LjcgMi41LTUuNyA1Ljd2MzFjMCAzLjEgMi41IDUuNyA1LjcgNS43aDE1LjVjMS45IDAgMy41LTEuNiAzLjUtMy41LjEtMi4xLTEuNS0zLjctMy41LTMuN3oiLz48L3N2Zz4=');
+        }
+        .Icon--share:hover {
+          background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1Ni44IDcyIj48cGF0aCBmaWxsPSJub25lIiBkPSJNMC0uN2g0OHY3MkgweiIvPjxwYXRoIGNsYXNzPSJpY29uIiBmaWxsPSIjMDA4NGI0IiBkPSJNNTIuOCAzMi45TDQyLjIgMjIuM2MtMS40LTEuNC0zLjYtMS40LTUgMHMtMS40IDMuNiAwIDVsNC42IDQuNkgyMC45Yy0xLjkgMC0zLjUgMS42LTMuNSAzLjVzMS42IDMuNSAzLjUgMy41aDIwLjlsLTQuNiA0LjZjLTEuNCAxLjQtMS40IDMuNiAwIDUgLjcuNyAxLjYgMSAyLjUgMXMxLjgtLjMgMi41LTFsMTAuNi0xMC42YzEuNC0xLjQgMS40LTMuNiAwLTV6Ii8+PHBhdGggY2xhc3M9Imljb24iIGZpbGw9IiMwMDg0YjQiIGQ9Ik0yNC40IDQ5LjRoLTEzYy0uNiAwLTEuMS0uNS0xLjItMS4xVjIyLjRjMC0uNy41LTEuMiAxLjItMS4yaDEyLjljMS45IDAgMy41LTEuNiAzLjUtMy41cy0xLjYtMy41LTMuNS0zLjVIOC45Yy0zLjEgMC01LjcgMi41LTUuNyA1Ljd2MzFjMCAzLjEgMi41IDUuNyA1LjcgNS43aDE1LjVjMS45IDAgMy41LTEuNiAzLjUtMy41LjEtMi4xLTEuNS0zLjctMy41LTMuN3oiLz48L3N2Zz4=');
+        }
+        .results{
+            position:relative;
+            width: auto;
+            height:auto;
+            max-height:400px;
+            background-color: rgba(160, 200, 220);
+            color: black;
+            padding: 5px 0;
+            text-align:center;
+            border-radius: 8px;
+            display:block;
+            margin:0 auto;
+            margin-bottom:5px;
+            opacity:1;
+            transition:0.6s opacity;
+        }
+
+
+
+    </style>
+</head>
+<body bgcolor="#141414">
+
+<nav class="navbar navbar-expand-lg navbar-inverse bg-inverse">
+    <div class="container">
+        <a class="navbar-brand" href="#">LOGO</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Link</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
+                        Dropdown
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#">Disabled</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <img class="img-rounded" src='{{context.title.poster}}' alt="poster">
+        </div>
+        <div class="col-md-8"><p>name : {{context.title.name}}</p>
+            <p>year : {{context.title.year}}</p>
+            <p>released : {{context.title.released}}</p>
+            <p>genre : {{context.title.genre}}</p>
+            <p>director : {{context.title.director}}</p>
+            <p>writer : {{context.title.writer}}</p>
+            <p>actors : {{context.title.actors}}</p>
+            <p>plot : {{context.title.plot}}</p>
+            <p>lang : {{context.title.lang}}</p>
+            <div class="row">
+                <div class="col-sm-4">
+                    <p>IMDB : {{context.ratings.imdb}}</p>
+                </div>
+
+                <div class="col-sm-4">
+                    <p>Rotten Tomatoes : {{context.ratings.rt}}</p>
+                </div>
+                <div class="col-sm-4">
+                    <p>Metacritic : {{context.ratings.mc}}</p>
+                </div>
+            </div>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#totalResultModal"
+                    id="twitterReviews">
+                Twitter Reviews
+            </button>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+
+            <!-- Modal -->
+            <div class="modal fade" id="totalResultModal" tabindex="-1" role="dialog"
+                 aria-labelledby="exampleModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog " role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel" style="color:#666666"><span
+                                    style="color:#666666" id="modalTitle">Total</span> Twitter Reviews
+                                On
+                                {{context.title.name}}</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="container">
+                                <div class="row">
+                                    <canvas id="totalResult"></canvas>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <p style="color:#666666;font-size:20px;">IMDB : {{context.ratings.imdb}}</p>
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <p style="color:#666666;font-size:20px;">Rotten Tomatoes :
+                                            {{context.ratings.rt}}</p>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <p style="color:#666666;font-size:20px;">Metacritic : {{context.ratings.mc}}</p>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="container">
+                                    <div class="row">
+                                        <p style="color:#666666">Based On <span style="color:#666666"
+                                                                                id="numberOfTweets">{{context.result.total.total}}</span>
+                                            Tweets</p>
+                                    </div>
+                                </div>
+                                <div class="container">
+                                    <div class="row"><span style="color:#666666">Estimated Rating : </span>
+                                        <div class="star-ratings-sprite">
+                                            <span style="width:100%;margin-bottom:15px;"
+                                                  class="star-ratings-sprite-rating"
+                                                  id="estimatedRating"></span>
+                                        </div>
+                                        <div>
+                                            <span id="estimatedRatingNum" style="color:#666666"></span>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="margin-bottom:15px">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
+                                <div class="container">
+                                    <div class="row" style="  justify-content: center;">
+                                        <div class="btn-group" role="group" aria-label="Basic example">
+                                            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                                                    id="english">English Reviews
+                                            </button>
+                                            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                                                    id="arabic">Arabic Reviews
+                                            </button>
+                                            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                                                    id="spanish">Spanish Reviews
+                                            </button>
+                                            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                                                    id="japanese">Japanese Reviews
+                                            </button>
+                                            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                                                    id="portuguese">portuguese Reviews
+                                            </button>
+                                            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                                                    id="korean">korean Reviews
+                                            </button>
+                                        </div>
+                                        <hr>
+                                        <div class="container" id="topTweetsEn">
+                                            <hr>
+                                            <h6 style="color:#666666">Top Tweets : </h6>
+                                            {% for tweet in context.tweets.en %}
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="tw-block-parent">
+                                                        <div class="timeline-TweetList-tweet">
+                                                            <div class="timeline-Tweet">
+                                                                <div class="timeline-Tweet-brand">
+                                                                    <div class="Icon Icon--twitter"></div>
+                                                                </div>
+                                                                <div class="timeline-Tweet-author">
+                                                                    <div class="TweetAuthor">
+                                                                        <a class="TweetAuthor-link"
+                                                                           href="#channel"> </a>
+                                                                        <span class="TweetAuthor-avatar"><div
+                                                                                class="Avatar"> </div></span>
+                                                                        <span class="TweetAuthor-name">{{tweet.username}} </span>
+                                                                        <span class="Icon Icon--verified"> </span>
+                                                                        <span class="TweetAuthor-screenName">@{{tweet.screen_name}} </span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="timeline-Tweet-text">{{tweet.text}}</div>
+                                                                <div class="timeline-Tweet-metadata"><span
+                                                                        class="timeline-Tweet-timestamp">{{tweet.date}}</span>
+                                                                </div>
+                                                                <ul class="timeline-Tweet-actions">
+                                                                    <li class="timeline-Tweet-action"><a
+                                                                            class="Icon Icon--heart"
+                                                                            href="#"></a></li>
+                                                                    <li class="timeline-Tweet-action"><a
+                                                                            class="Icon Icon--share"
+                                                                            href="#"></a></li>
+                                                                </ul>
+                                                            </div>
+
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% endfor %}
+                                        </div>
+                                        <div class="container" id="topTweetsAr">
+                                            <hr>
+                                            <h6 style="color:#666666">Top Tweets : </h6>
+                                            {% for tweet in context.tweets.ar %}
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="tw-block-parent">
+                                                        <div class="timeline-TweetList-tweet">
+                                                            <div class="timeline-Tweet">
+                                                                <div class="timeline-Tweet-brand">
+                                                                    <div class="Icon Icon--twitter"></div>
+                                                                </div>
+                                                                <div class="timeline-Tweet-author">
+                                                                    <div class="TweetAuthor">
+                                                                        <a class="TweetAuthor-link"
+                                                                           href="#channel"> </a>
+                                                                        <span class="TweetAuthor-avatar"><div
+                                                                                class="Avatar"> </div></span>
+                                                                        <span class="TweetAuthor-name">{{tweet.username}} </span>
+                                                                        <span class="Icon Icon--verified"> </span>
+                                                                        <span class="TweetAuthor-screenName">@{{tweet.screen_name}} </span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="timeline-Tweet-text">{{tweet.text}}</div>
+                                                                <div class="timeline-Tweet-metadata"><span
+                                                                        class="timeline-Tweet-timestamp">{{tweet.date}}</span>
+                                                                </div>
+                                                                <ul class="timeline-Tweet-actions">
+                                                                    <li class="timeline-Tweet-action"><a
+                                                                            class="Icon Icon--heart"
+                                                                            href="#"></a></li>
+                                                                    <li class="timeline-Tweet-action"><a
+                                                                            class="Icon Icon--share"
+                                                                            href="#"></a></li>
+                                                                </ul>
+                                                            </div>
+
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% endfor %}
+                                        </div>
+                                        <div class="container" id="topTweetsEs">
+                                            <hr>
+                                            <h6 style="color:#666666">Top Tweets : </h6>
+                                            {% for tweet in context.tweets.es %}
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="tw-block-parent">
+                                                        <div class="timeline-TweetList-tweet">
+                                                            <div class="timeline-Tweet">
+                                                                <div class="timeline-Tweet-brand">
+                                                                    <div class="Icon Icon--twitter"></div>
+                                                                </div>
+                                                                <div class="timeline-Tweet-author">
+                                                                    <div class="TweetAuthor">
+                                                                        <a class="TweetAuthor-link"
+                                                                           href="#channel"> </a>
+                                                                        <span class="TweetAuthor-avatar"><div
+                                                                                class="Avatar"> </div></span>
+                                                                        <span class="TweetAuthor-name">{{tweet.username}} </span>
+                                                                        <span class="Icon Icon--verified"> </span>
+                                                                        <span class="TweetAuthor-screenName">@{{tweet.screen_name}} </span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="timeline-Tweet-text">{{tweet.text}}</div>
+                                                                <div class="timeline-Tweet-metadata"><span
+                                                                        class="timeline-Tweet-timestamp">{{tweet.date}}</span>
+                                                                </div>
+                                                                <ul class="timeline-Tweet-actions">
+                                                                    <li class="timeline-Tweet-action"><a
+                                                                            class="Icon Icon--heart"
+                                                                            href="#"></a></li>
+                                                                    <li class="timeline-Tweet-action"><a
+                                                                            class="Icon Icon--share"
+                                                                            href="#"></a></li>
+                                                                </ul>
+                                                            </div>
+
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% endfor %}
+                                        </div>
+                                        <div class="container" id="topTweetsJa">
+                                            <hr>
+                                            <h6 style="color:#666666">Top Tweets : </h6>
+                                            {% for tweet in context.tweets.ja %}
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="tw-block-parent">
+                                                        <div class="timeline-TweetList-tweet">
+                                                            <div class="timeline-Tweet">
+                                                                <div class="timeline-Tweet-brand">
+                                                                    <div class="Icon Icon--twitter"></div>
+                                                                </div>
+                                                                <div class="timeline-Tweet-author">
+                                                                    <div class="TweetAuthor">
+                                                                        <a class="TweetAuthor-link"
+                                                                           href="#channel"> </a>
+                                                                        <span class="TweetAuthor-avatar"><div
+                                                                                class="Avatar"> </div></span>
+                                                                        <span class="TweetAuthor-name">{{tweet.username}} </span>
+                                                                        <span class="Icon Icon--verified"> </span>
+                                                                        <span class="TweetAuthor-screenName">@{{tweet.screen_name}} </span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="timeline-Tweet-text">{{tweet.text}}</div>
+                                                                <div class="timeline-Tweet-metadata"><span
+                                                                        class="timeline-Tweet-timestamp">{{tweet.date}}</span>
+                                                                </div>
+                                                                <ul class="timeline-Tweet-actions">
+                                                                    <li class="timeline-Tweet-action"><a
+                                                                            class="Icon Icon--heart"
+                                                                            href="#"></a></li>
+                                                                    <li class="timeline-Tweet-action"><a
+                                                                            class="Icon Icon--share"
+                                                                            href="#"></a></li>
+                                                                </ul>
+                                                            </div>
+
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% endfor %}
+                                        </div>
+                                        <div class="container" id="topTweetsPt">
+                                            <hr>
+                                            <h6 style="color:#666666">Top Tweets : </h6>
+                                            {% for tweet in context.tweets.pt %}
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="tw-block-parent">
+                                                        <div class="timeline-TweetList-tweet">
+                                                            <div class="timeline-Tweet">
+                                                                <div class="timeline-Tweet-brand">
+                                                                    <div class="Icon Icon--twitter"></div>
+                                                                </div>
+                                                                <div class="timeline-Tweet-author">
+                                                                    <div class="TweetAuthor">
+                                                                        <a class="TweetAuthor-link"
+                                                                           href="#channel"> </a>
+                                                                        <span class="TweetAuthor-avatar"><div
+                                                                                class="Avatar"> </div></span>
+                                                                        <span class="TweetAuthor-name">{{tweet.username}} </span>
+                                                                        <span class="Icon Icon--verified"> </span>
+                                                                        <span class="TweetAuthor-screenName">@{{tweet.screen_name}} </span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="timeline-Tweet-text">{{tweet.text}}</div>
+                                                                <div class="timeline-Tweet-metadata"><span
+                                                                        class="timeline-Tweet-timestamp">{{tweet.date}}</span>
+                                                                </div>
+                                                                <ul class="timeline-Tweet-actions">
+                                                                    <li class="timeline-Tweet-action"><a
+                                                                            class="Icon Icon--heart"
+                                                                            href="#"></a></li>
+                                                                    <li class="timeline-Tweet-action"><a
+                                                                            class="Icon Icon--share"
+                                                                            href="#"></a></li>
+                                                                </ul>
+                                                            </div>
+
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% endfor %}
+                                        </div>
+                                        <div class="container" id="topTweetsKo">
+                                            <hr>
+                                            <h6 style="color:#666666">Top Tweets : </h6>
+                                            {% for tweet in context.tweets.ko %}
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="tw-block-parent">
+                                                        <div class="timeline-TweetList-tweet">
+                                                            <div class="timeline-Tweet">
+                                                                <div class="timeline-Tweet-brand">
+                                                                    <div class="Icon Icon--twitter"></div>
+                                                                </div>
+                                                                <div class="timeline-Tweet-author">
+                                                                    <div class="TweetAuthor">
+                                                                        <a class="TweetAuthor-link"
+                                                                           href="#channel"> </a>
+                                                                        <span class="TweetAuthor-avatar"><div
+                                                                                class="Avatar"> </div></span>
+                                                                        <span class="TweetAuthor-name">{{tweet.username}} </span>
+                                                                        <span class="Icon Icon--verified"> </span>
+                                                                        <span class="TweetAuthor-screenName">@{{tweet.screen_name}} </span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="timeline-Tweet-text">{{tweet.text}}</div>
+                                                                <div class="timeline-Tweet-metadata"><span
+                                                                        class="timeline-Tweet-timestamp">{{tweet.date}}</span>
+                                                                </div>
+                                                                <ul class="timeline-Tweet-actions">
+                                                                    <li class="timeline-Tweet-action"><a
+                                                                            class="Icon Icon--heart"
+                                                                            href="#"></a></li>
+                                                                    <li class="timeline-Tweet-action"><a
+                                                                            class="Icon Icon--share"
+                                                                            href="#"></a></li>
+                                                                </ul>
+                                                            </div>
+
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% endfor %}
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+<hr>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+<script>
+    var enButton = document.getElementById('english');
+    var arButton = document.getElementById('arabic');
+    var esButton = document.getElementById('spanish');
+    var jaButton = document.getElementById('japanese');
+    var ptButton = document.getElementById('portuguese');
+    var koButton = document.getElementById('korean');
+    var ctx = document.getElementById('totalResult');
+    var numberOfTweets = document.getElementById('numberOfTweets');
+    var Button = document.getElementById('twitterReviews');
+    var modalTitle = document.getElementById('modalTitle');
+    var topTweetsEn = document.getElementById('topTweetsEn');
+    var topTweetsAr = document.getElementById('topTweetsAr');
+    var topTweetsEs = document.getElementById('topTweetsEs');
+    var topTweetsJa = document.getElementById('topTweetsJa');
+    var topTweetsPt = document.getElementById('topTweetsPt');
+    var topTweetsKo = document.getElementById('topTweetsKo');
+    var estimatedRating = document.getElementById('estimatedRating');
+    var estimatedRatingNum = document.getElementById('estimatedRatingNum');
+    estimatedRating.style.width = ((({{context.result.total.positive}}*{{context.result.total.total}})/({{context.result.total.negative}}*{{context.result.total.total}}+{{context.result.total.positive}}*{{context.result.total.total}}))*100).toString().concat('%');
+    estimatedRatingNum.innerHTML = ((({{context.result.total.positive}}*{{context.result.total.total}})/({{context.result.total.negative}}*{{context.result.total.total}}+{{context.result.total.positive}}*{{context.result.total.total}}))*10).toFixed(1).toString().concat('/10')
+    var myChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ['POSITIVE % (', 'NEGATIVE % ', 'NEUTRAL % ', 'MIXED % '],
+            datasets: [{
+                label: '# of Votes',
+                data: [parseFloat({{context.result.total.positive}})*100,
+                 parseFloat({{context.result.total.negative}})*100,
+                 parseFloat({{context.result.total.neutral}})*100,
+                 (1-(parseFloat({{context.result.total.positive}})+
+                 parseFloat({{context.result.total.negative}})+
+                 parseFloat({{context.result.total.neutral}})))*100],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+               ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+            }
+        }
+
+    });
+    Button.onclick = function(){
+    myChart.destroy();
+    estimatedRating.style.width = ((({{context.result.total.positive}}*{{context.result.total.total}})/({{context.result.total.negative}}*{{context.result.total.total}}+{{context.result.total.positive}}*{{context.result.total.total}}))*100).toString().concat('%');
+    estimatedRatingNum.innerHTML = ((({{context.result.total.positive}}*{{context.result.total.total}})/({{context.result.total.negative}}*{{context.result.total.total}}+{{context.result.total.positive}}*{{context.result.total.total}}))*10).toFixed(1).toString().concat('/10')
+    myChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ['POSITIVE % ', 'NEGATIVE % ', 'NEUTRAL % ', 'MIXED % '],
+            datasets: [{
+                label: '# of Votes',
+                data: [parseFloat({{context.result.total.positive}})*100,
+                 parseFloat({{context.result.total.negative}})*100,
+                 parseFloat({{context.result.total.neutral}})*100,
+                 (1-(parseFloat({{context.result.total.positive}})+
+                 parseFloat({{context.result.total.negative}})+
+                 parseFloat({{context.result.total.neutral}})))*100],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+               ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+            }
+        }
+
+    });
+    numberOfTweets.innerHTML = "{{context.result.total.total}}";
+    modalTitle.innerHTML = "Total";
+    topTweetsEn.style.display = "none";
+    topTweetsAr.style.display = "none";
+    topTweetsEs.style.display = "none";
+    topTweetsJa.style.display = "none";
+    topTweetsPt.style.display = "none";
+    topTweetsKo.style.display = "none";
+    }
+
+    enButton.onclick = function(){
+    myChart.destroy();
+    myChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ['POSITIVE % ', 'NEGATIVE % ', 'NEUTRAL % ', 'MIXED % '],
+            datasets: [{
+                label: '# of Votes',
+                data: [parseFloat({{context.result.en.positive}})*100,
+                 parseFloat({{context.result.en.negative}})*100,
+                 parseFloat({{context.result.en.neutral}})*100,
+                 (1-(parseFloat({{context.result.en.positive}})+
+                 parseFloat({{context.result.en.negative}})+
+                 parseFloat({{context.result.en.neutral}})))*100],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+               ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+            }
+        }
+
+    });
+    numberOfTweets.innerHTML = "{{context.result.en.total}}";
+    modalTitle.innerHTML = "English";
+    topTweetsEn.style.display = "block";
+    topTweetsAr.style.display = "none";
+    topTweetsEs.style.display = "none";
+    topTweetsJa.style.display = "none";
+    topTweetsPt.style.display = "none";
+    topTweetsKo.style.display = "none";
+    estimatedRating.style.width = ((({{context.result.en.positive}}*{{context.result.en.total}})/({{context.result.en.negative}}*{{context.result.en.total}}+{{context.result.en.positive}}*{{context.result.en.total}}))*100).toString().concat('%');
+    estimatedRatingNum.innerHTML = ((({{context.result.en.positive}}*{{context.result.en.total}})/({{context.result.en.negative}}*{{context.result.en.total}}+{{context.result.en.positive}}*{{context.result.en.total}}))*10).toFixed(1).toString().concat('/10')
+
+    }
+    arButton.onclick = function(){
+    myChart.destroy();
+    myChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ['POSITIVE % ', 'NEGATIVE % ', 'NEUTRAL % ', 'MIXED % '],
+            datasets: [{
+                label: '# of Votes',
+                data: [parseFloat({{context.result.ar.positive}})*100,
+                 parseFloat({{context.result.ar.negative}})*100,
+                 parseFloat({{context.result.ar.neutral}})*100,
+                 (1-(parseFloat({{context.result.ar.positive}})+
+                 parseFloat({{context.result.ar.negative}})+
+                 parseFloat({{context.result.ar.neutral}})))*100],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+               ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+            }
+        }
+
+    });
+    estimatedRating.style.width = ((({{context.result.ar.positive}}*{{context.result.ar.total}})/({{context.result.ar.negative}}*{{context.result.ar.total}}+{{context.result.ar.positive}}*{{context.result.ar.total}}))*100).toString().concat('%');
+    estimatedRatingNum.innerHTML = ((({{context.result.ar.positive}}*{{context.result.ar.total}})/({{context.result.ar.negative}}*{{context.result.ar.total}}+{{context.result.ar.positive}}*{{context.result.ar.total}}))*10).toFixed(1).toString().concat('/10')
+    numberOfTweets.innerHTML = "{{context.result.ar.total}}";
+    modalTitle.innerHTML = "Arabic";
+    topTweetsEn.style.display = "none";
+    topTweetsAr.style.display = "block";
+    topTweetsEs.style.display = "none";
+    topTweetsJa.style.display = "none";
+    topTweetsPt.style.display = "none";
+    topTweetsKo.style.display = "none";
+
+    }
+    esButton.onclick = function(){
+    myChart.destroy();
+    myChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ['POSITIVE % ', 'NEGATIVE % ', 'NEUTRAL % ', 'MIXED % '],
+            datasets: [{
+                label: '# of Votes',
+                data: [parseFloat({{context.result.es.positive}})*100,
+                 parseFloat({{context.result.es.negative}})*100,
+                 parseFloat({{context.result.es.neutral}})*100,
+                 (1-(parseFloat({{context.result.es.positive}})+
+                 parseFloat({{context.result.es.negative}})+
+                 parseFloat({{context.result.es.neutral}})))*100],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+               ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+            }
+        }
+
+    });
+    estimatedRating.style.width = ((({{context.result.es.positive}}*{{context.result.es.total}})/({{context.result.es.negative}}*{{context.result.es.total}}+{{context.result.es.positive}}*{{context.result.es.total}}))*100).toString().concat('%');
+    estimatedRatingNum.innerHTML = ((({{context.result.es.positive}}*{{context.result.es.total}})/({{context.result.es.negative}}*{{context.result.es.total}}+{{context.result.es.positive}}*{{context.result.es.total}}))*10).toFixed(1).toString().concat('/10')
+    numberOfTweets.innerHTML = "{{context.result.es.total}}";
+    modalTitle.innerHTML = "Spanish";
+    topTweetsEn.style.display = "none";
+    topTweetsAr.style.display = "none";
+    topTweetsEs.style.display = "block";
+    topTweetsJa.style.display = "none";
+    topTweetsPt.style.display = "none";
+    topTweetsKo.style.display = "none";
+
+    }
+    jaButton.onclick = function(){
+    myChart.destroy();
+    myChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ['POSITIVE % ', 'NEGATIVE % ', 'NEUTRAL % ', 'MIXED % '],
+            datasets: [{
+                label: '# of Votes',
+                data: [parseFloat({{context.result.ja.positive}})*100,
+                 parseFloat({{context.result.ja.negative}})*100,
+                 parseFloat({{context.result.ja.neutral}})*100,
+                 (1-(parseFloat({{context.result.ja.positive}})+
+                 parseFloat({{context.result.ja.negative}})+
+                 parseFloat({{context.result.ja.neutral}})))*100],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+               ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+            }
+        }
+
+    });
+    numberOfTweets.innerHTML = "{{context.result.ja.total}}";
+    modalTitle.innerHTML = "Japanese";
+    topTweetsEn.style.display = "none";
+    topTweetsAr.style.display = "none";
+    topTweetsEs.style.display = "none";
+    topTweetsJa.style.display = "block";
+    topTweetsPt.style.display = "none";
+    topTweetsKo.style.display = "none";
+
+    estimatedRating.style.width = ((({{context.result.ja.positive}}*{{context.result.ja.total}})/({{context.result.ja.negative}}*{{context.result.ja.total}}+{{context.result.ja.positive}}*{{context.result.ja.total}}))*100).toString().concat('%');
+    estimatedRatingNum.innerHTML = ((({{context.result.ja.positive}}*{{context.result.ja.total}})/({{context.result.ja.negative}}*{{context.result.ja.total}}+{{context.result.ja.positive}}*{{context.result.ja.total}}))*10).toFixed(1).toString().concat('/10')
+    }
+    ptButton.onclick = function(){
+    myChart.destroy();
+    myChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ['POSITIVE % ', 'NEGATIVE % ', 'NEUTRAL % ', 'MIXED % '],
+            datasets: [{
+                label: '# of Votes',
+                data: [parseFloat({{context.result.pt.positive}})*100,
+                 parseFloat({{context.result.pt.negative}})*100,
+                 parseFloat({{context.result.pt.neutral}})*100,
+                 (1-(parseFloat({{context.result.pt.positive}})+
+                 parseFloat({{context.result.pt.negative}})+
+                 parseFloat({{context.result.pt.neutral}})))*100],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+               ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+            }
+        }
+
+    });
+    estimatedRating.style.width = ((({{context.result.pt.positive}}*{{context.result.pt.total}})/({{context.result.pt.negative}}*{{context.result.pt.total}}+{{context.result.pt.positive}}*{{context.result.pt.total}}))*100).toString().concat('%');
+    estimatedRatingNum.innerHTML = ((({{context.result.pt.positive}}*{{context.result.pt.total}})/({{context.result.pt.negative}}*{{context.result.pt.total}}+{{context.result.pt.positive}}*{{context.result.pt.total}}))*10).toFixed(1).toString().concat('/10')
+    numberOfTweets.innerHTML = "{{context.result.pt.total}}";
+    modalTitle.innerHTML = "Portuguese";
+    topTweetsEn.style.display = "none";
+    topTweetsAr.style.display = "none";
+    topTweetsEs.style.display = "none";
+    topTweetsJa.style.display = "none";
+    topTweetsPt.style.display = "block";
+    topTweetsKo.style.display = "none";
+
+    }
+ koButton.onclick = function(){
+    myChart.destroy();
+    myChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ['POSITIVE % ', 'NEGATIVE % ', 'NEUTRAL % ', 'MIXED % '],
+            datasets: [{
+                label: '# of Votes',
+                data: [parseFloat({{context.result.ko.positive}})*100,
+                 parseFloat({{context.result.ko.negative}})*100,
+                 parseFloat({{context.result.ko.neutral}})*100,
+                 (1-(parseFloat({{context.result.ko.positive}})+
+                 parseFloat({{context.result.ko.negative}})+
+                 parseFloat({{context.result.ko.neutral}})))*100],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+               ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+            }
+        }
+
+    });
+    estimatedRating.style.width = ((({{context.result.ko.positive}}*{{context.result.ko.total}})/({{context.result.ko.negative}}*{{context.result.ko.total}}+{{context.result.ko.positive}}*{{context.result.ko.total}}))*100).toString().concat('%');
+    estimatedRatingNum.innerHTML = ((({{context.result.ko.positive}}*{{context.result.ko.total}})/({{context.result.ko.negative}}*{{context.result.ko.total}}+{{context.result.ko.positive}}*{{context.result.ko.total}}))*10).toFixed(1).toString().concat('/10')
+    numberOfTweets.innerHTML = "{{context.result.ko.total}}";
+    modalTitle.innerHTML = "Portuguese";
+    topTweetsEn.style.display = "none";
+    topTweetsAr.style.display = "none";
+    topTweetsEs.style.display = "none";
+    topTweetsJa.style.display = "none";
+    topTweetsPt.style.display = "none";
+    topTweetsKo.style.display = "block";
+
+    }
+
+</script>
+</body>
+</html>

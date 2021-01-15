@@ -1,0 +1,90 @@
+{% load static %}
+{% load compress %}
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>website name</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+
+    <!-- Link Swiper's CSS -->
+    <link rel="stylesheet" href="{% static 'search_title/package/css/swiper.min.css'%}">
+    <link rel="stylesheet" href="{% static 'search_title/css/searchbar.css' %}">
+
+    <!--<link rel="stylesheet" href="{% static 'search_title/css/styles.css'%}">-->
+    {% compress css %}
+    <link type="text/x-scss" href="{% static 'search_title/css/styles.scss' %}" rel="stylesheet" media="screen">
+    {% endcompress %}
+
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'>
+
+</head>
+<body>
+<!-- Swiper -->
+<div>
+    <h1 style="isolation:isolate;">LOGO HERE</h1>
+   <!-- <div class="search-box" style="float:right;"><i class="fa fa-search search-box__icon"></i>
+        <input class="search-box__input" placeholder="Título, personas, generos"/>
+    </div> -->
+</div>
+<div class="netflix-slider" style="">
+    <h2>TOP VIEWED TITLES</h2>
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            {% for title in titles %}
+            <a class="swiper-slide" type="button"
+               onclick="location.href='{{title.url}}'"><img
+                    src="{{title.poster}}"
+                    alt="Movie Title"></a>
+            {% endfor %}
+
+            <!-- Add Pagination -->
+            <!-- <div class="swiper-pagination"></div> -->
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+        </div>
+    </div>
+</div>
+
+<!-- Swiper JS -->
+<script src="{% static 'search_title/package/js/swiper.min.js'%}"></script>
+
+<!-- Initialize Swiper -->
+<script>
+    var swiper = new Swiper('.swiper-container', {
+      slidesPerView: 6,
+      spaceBetween: 10,
+      slidesPerGroup: 2,
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+    });
+
+</script>
+<script src="https://static.codepen.io/assets/common/stopExecutionOnTimeout-157cd5b220a5c80d4ff8e0e70ac069bffd87a61252088146915e8726e5d9f147.js"></script>
+<script id="rendered-js">
+var searchIcon = document.getElementsByClassName("search-box__icon")[0];
+var searchBox = document.getElementsByClassName("search-box")[0];
+
+searchIcon.addEventListener("click", activateSearch);
+
+function activateSearch() {
+  searchBox.classList.toggle("active");
+}
+//# sourceURL=pen.js
+
+
+
+
+
+
+
+</script>
+</body>
+</html>
+
